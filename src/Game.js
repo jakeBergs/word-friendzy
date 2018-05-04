@@ -1,20 +1,30 @@
 import React, { Component } from 'react';
 import AddWords from './AddWords';
 import WordsPlayed from './WordsPlayed';
+import database from './firebase';
 
 class Game extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      letters: { a: 1, m: 2, g: 1, e: 1, j: 1, y: 1, s: 2 },
-      lettersRemaining: { a: 1, m: 2, g: 1, e: 1, j: 1, y: 1, s: 2 },
+      letters: {},
+      lettersRemaining: {},
       words: {},
       currWord: ''
     };
 
     this.updateCurr = this.updateCurr.bind(this);
     this.saveWord = this.saveWord.bind(this);
+  }
+
+  componentDidMount() {
+    const gameID = this.props.match.params.gameID;
+    // console.log(this.props.match.params.gameID)
+    database.ref(`games/${gameID}/letters`).once('value').then(snapshot => {
+      this.setState({letters: snapshot.val(), lettersRemaining: snapshot.val()})
+    })
+
   }
 
   updateCurr(event) {
