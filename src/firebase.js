@@ -18,8 +18,8 @@ export const createGame = () => {
   const gameID = uuidv1();
   const letters = letterGenerator();
   database.ref(`games/${gameID}`).set({
-    players: { player1: 0 },
-    letters
+    letters,
+    status: 'waiting'
   })
   return gameID;
 }
