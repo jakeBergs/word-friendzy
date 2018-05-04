@@ -25,6 +25,11 @@ class Game extends Component {
       this.setState({letters: snapshot.val(), lettersRemaining: snapshot.val()})
     })
 
+    const wordsRef = database.ref(`games/${gameID}/words`);
+    wordsRef.on('value', (snapshot) => {
+      this.setState({words: snapshot.val()})
+    })
+
   }
 
   updateCurr(event) {
@@ -61,9 +66,15 @@ class Game extends Component {
       event.preventDefault();
       const { currWord, words, letters } = this.state;
       if (!words[currWord]) {
-        let newWordList = Object.assign({}, words);
-        newWordList[currWord] = 1;
-        this.setState({ words: newWordList, lettersRemaining: Object.assign({}, letters), currWord: '' });
+        // let newWordList = Object.assign({}, words);
+        // newWordList[currWord] = 1;
+        // this.setState({ words: newWordList, lettersRemaining: Object.assign({}, letters), currWord: '' });
+        this.setState({lettersRemaining: Object.assign({}, letters), currWord: ''})
+        // save word to firebase
+        const gameID = this.props.match.params.gameID;
+        const newEntry = {};
+        newEntry[currWord] = 'player1';
+        database.ref(`games/${gameID}/words`).update(newEntry);
       }
     }
   }
