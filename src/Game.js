@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AddWords from './AddWords';
+import WordsPlayed from './WordsPlayed';
 
 class Game extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class Game extends Component {
   }
 
   updateCurr(event) {
+
     event.preventDefault();
     let { lettersRemaining } = this.state;
     const { letters, currWord } = this.state;
@@ -57,10 +59,10 @@ class Game extends Component {
   }
 
   render() {
-    const { lettersRemaining, currWord } = this.state;
+    const { lettersRemaining, currWord, words } = this.state;
     return (
       <div>
-
+        <WordsPlayed words={words}/>
         <AddWords lettersRemaining={lettersRemaining} currWord={currWord} editWord={this.updateCurr} saveWord={this.saveWord} />
       </div>
     )
