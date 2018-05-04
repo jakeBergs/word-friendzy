@@ -5,7 +5,7 @@ const Home = (props) => {
   const gameCreator = (event) => {
     event.preventDefault();
     const gameID = createGame();
-    props.history.push(`/game/${gameID}`)
+    props.history.push(`/pregame/${gameID}`)
   }
 
   return (
