@@ -37,7 +37,6 @@ class Game extends Component {
 
     // load all the letters
     database.ref(`games/${gameID}/letters`).once('value').then(snapshot => {
-      console.log(snapshot.val())
       this.setState({ letters: snapshot.val(), lettersRemaining: snapshot.val() })
     })
     // set listener for words
@@ -49,7 +48,6 @@ class Game extends Component {
     // set listener for game status
     const statusRef = database.ref(`games/${gameID}/status`)
     statusRef.on('value', (snapshot) => {
-      console.log(snapshot.val())
       this.setState({ status: snapshot.val() })
     })
   }
@@ -58,7 +56,6 @@ class Game extends Component {
     event.preventDefault();
     const name = event.target.playerName.value;
     if (name) {
-      console.log('in');
       const gameID = this.props.match.params.gameID;
       let newPlayer = {};
       newPlayer[name] = 0;
@@ -84,7 +81,6 @@ class Game extends Component {
     let { lettersRemaining } = this.state;
     const { letters, currWord } = this.state;
     const updatedWord = event.target.value;
-    console.log(letters)
     // all letters have been deleted. have all letters available
     if (!updatedWord.length) {
       this.setState({ lettersRemaining: Object.assign({}, letters), currWord: '' })
@@ -128,7 +124,6 @@ class Game extends Component {
   render() {
     const gameID = this.props.match.params.gameID;
     const { lettersRemaining, currWord, words, status, players, thisPlayer } = this.state;
-    console.log(thisPlayer)
     return (
       <div id="game">
         {

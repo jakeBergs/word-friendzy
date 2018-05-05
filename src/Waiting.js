@@ -5,7 +5,6 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 const Waiting = (props) => {
   const gameID = props.gameID;
   const thisPlayer = props.thisPlayer;
-  console.log(props)
   const players = Object.keys(props.playersObj);
   return (
     <div id="waiting">
