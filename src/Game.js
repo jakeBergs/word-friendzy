@@ -3,6 +3,7 @@ import AddWords from './AddWords';
 import WordsPlayed from './WordsPlayed';
 import database from './firebase';
 import Waiting from './Waiting';
+import Timer from './Timer'
 
 class Game extends Component {
   constructor(props) {
@@ -131,6 +132,7 @@ class Game extends Component {
             <div>
               <WordsPlayed words={words} />
               <AddWords lettersRemaining={lettersRemaining} currWord={currWord} editWord={this.updateCurr} saveWord={this.saveWord} />
+              <Timer gameID={gameID} />
             </div> : ''
         }
         {
