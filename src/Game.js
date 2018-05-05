@@ -3,7 +3,8 @@ import AddWords from './AddWords';
 import WordsPlayed from './WordsPlayed';
 import database from './firebase';
 import Waiting from './Waiting';
-import Timer from './Timer'
+import Timer from './Timer';
+import Stats from './Stats';
 
 class Game extends Component {
   constructor(props) {
@@ -109,14 +110,18 @@ class Game extends Component {
   saveWord(event) {
     if (event.key === 'Enter') {
       event.preventDefault();
-      const { currWord, words, letters } = this.state;
-      if (!words[currWord]) {
+      const { currWord, words, letters, thisPlayer, players } = this.state;
+      if (!words[currWord] && currWord.length > 2) {
         this.setState({ lettersRemaining: Object.assign({}, letters), currWord: '' })
         // save word to firebase
         const gameID = this.props.match.params.gameID;
         const newEntry = {};
-        newEntry[currWord] = 'player1';
+        newEntry[currWord] = thisPlayer;
         database.ref(`games/${gameID}/words`).update(newEntry);
+        // save updated score to firebase
+        let playerUpdate = {};
+        playerUpdate[thisPlayer] = players[thisPlayer] + currWord.length - 2;
+        database.ref(`games/${gameID}/players`).update(playerUpdate);
       }
     }
   }
@@ -138,6 +143,10 @@ class Game extends Component {
         {
           status === 'waiting' ?
             <Waiting playersObj={players} thisPlayer={thisPlayer} gameID={gameID} savePlayer={this.savePlayer} startGame={this.startGame} /> : ''
+        }
+        {
+          status === 'finished' ?
+            <Stats players={players} /> : ''
         }
       </div>
     )
