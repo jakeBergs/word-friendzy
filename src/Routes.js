@@ -10,7 +10,6 @@ const Routes = (props) => {
     <Switch>
       <Route exact path="/" component={Home} />
       <Route path="/game/:gameID" component={Game} />
-      <Route path="/pregame/:gameID" component={Waiting} />
     </Switch>
   )
 }

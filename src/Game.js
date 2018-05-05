@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AddWords from './AddWords';
 import WordsPlayed from './WordsPlayed';
 import database from './firebase';
+import Waiting from './Waiting';
 
 class Game extends Component {
   constructor(props) {
@@ -11,25 +12,68 @@ class Game extends Component {
       letters: {},
       lettersRemaining: {},
       words: {},
-      currWord: ''
+      currWord: '',
+      players: {},
+      thisPlayer: '',
+      status: ''
     };
 
+    this.savePlayer = this.savePlayer.bind(this);
+    this.startGame = this.startGame.bind(this);
     this.updateCurr = this.updateCurr.bind(this);
     this.saveWord = this.saveWord.bind(this);
   }
 
   componentDidMount() {
     const gameID = this.props.match.params.gameID;
-    // console.log(this.props.match.params.gameID)
-    database.ref(`games/${gameID}/letters`).once('value').then(snapshot => {
-      this.setState({letters: snapshot.val(), lettersRemaining: snapshot.val()})
+    const playersRef = database.ref(`games/${gameID}/players`);
+
+    playersRef.on('value', (snapshot) => {
+      if (snapshot.val())
+        this.setState({ players: snapshot.val() })
     })
 
+    // load all the letters
+    database.ref(`games/${gameID}/letters`).once('value').then(snapshot => {
+      console.log(snapshot.val())
+      this.setState({ letters: snapshot.val(), lettersRemaining: snapshot.val() })
+    })
+    // set listener for words
     const wordsRef = database.ref(`games/${gameID}/words`);
     wordsRef.on('value', (snapshot) => {
-      this.setState({words: snapshot.val()})
+      this.setState({ words: snapshot.val() || {} })
     })
 
+    // set listener for game status
+    const statusRef = database.ref(`games/${gameID}/status`)
+    statusRef.on('value', (snapshot) => {
+      console.log(snapshot.val())
+      this.setState({ status: snapshot.val() })
+    })
+  }
+
+  savePlayer(event) {
+    event.preventDefault();
+    const name = event.target.playerName.value;
+    if (name) {
+      console.log('in');
+      const gameID = this.props.match.params.gameID;
+      let newPlayer = {};
+      newPlayer[name] = 0;
+      database.ref(`games/${gameID}/players`).update(newPlayer);
+      this.setState({ thisPlayer: name })
+    }
+  }
+
+  // player starts the game
+  startGame(event) {
+    event.preventDefault()
+    const gameID = this.props.match.params.gameID;
+
+    // set game status
+    database.ref(`games/${gameID}`).update({
+      status: 'playing'
+    })
   }
 
   updateCurr(event) {
@@ -66,10 +110,7 @@ class Game extends Component {
       event.preventDefault();
       const { currWord, words, letters } = this.state;
       if (!words[currWord]) {
-        // let newWordList = Object.assign({}, words);
-        // newWordList[currWord] = 1;
-        // this.setState({ words: newWordList, lettersRemaining: Object.assign({}, letters), currWord: '' });
-        this.setState({lettersRemaining: Object.assign({}, letters), currWord: ''})
+        this.setState({ lettersRemaining: Object.assign({}, letters), currWord: '' })
         // save word to firebase
         const gameID = this.props.match.params.gameID;
         const newEntry = {};
@@ -80,11 +121,22 @@ class Game extends Component {
   }
 
   render() {
-    const { lettersRemaining, currWord, words } = this.state;
+    const gameID = this.props.match.params.gameID;
+    const { lettersRemaining, currWord, words, status, players, thisPlayer } = this.state;
+    console.log(thisPlayer)
     return (
       <div>
-        <WordsPlayed words={words}/>
-        <AddWords lettersRemaining={lettersRemaining} currWord={currWord} editWord={this.updateCurr} saveWord={this.saveWord} />
+        {
+          status === 'playing' ?
+            <div>
+              <WordsPlayed words={words} />
+              <AddWords lettersRemaining={lettersRemaining} currWord={currWord} editWord={this.updateCurr} saveWord={this.saveWord} />
+            </div> : ''
+        }
+        {
+          status === 'waiting' ?
+            <Waiting playersObj={players} thisPlayer={thisPlayer} gameID={gameID} savePlayer={this.savePlayer} startGame={this.startGame} /> : ''
+        }
       </div>
     )
   }
