@@ -8,34 +8,39 @@ const Waiting = (props) => {
   console.log(props)
   const players = Object.keys(props.playersObj);
   return (
-    <div>
+    <div id="waiting">
       <h2>Waiting Room</h2>
-      <div>
-        <h3>Players</h3>
+      <div id="player-info">
         {
-          players.length ?
-            players.map(player => (<p key={player}>{player}</p>)) :
-            <p>No Players in the Game</p>
+          thisPlayer ?
+            <h3>Welcome {thisPlayer}</h3> :
+            (
+              <div>
+                <h4>Join The Game</h4>
+                <form onSubmit={props.savePlayer}>
+                  <input className="input-text" type="text" name="playerName" />
+                  <input className="input-button" type="submit" value="Join" />
+                </form>
+              </div>
+            )
         }
+        <div id="players-waiting">
+          <h3>Players</h3>
+          {
+            players.length ?
+              players.map(player => (<p key={player} className="player-joined">{player}</p>)) :
+              <p>No Players in the Game</p>
+          }
+        </div>
       </div>
-      {
-        thisPlayer ?
-          <h3>Welcome {thisPlayer}</h3> :
-          (
-            <form onSubmit={props.savePlayer}>
-              <input type="text" name="playerName" />
-              <input type="submit" value="enter" />
-            </form>
-          )
-      }
-      <div>
-        <h3>Invite your friendz!</h3>
+      <h3>Invite your friendz!</h3>
+      <div id="invite-link">
         <p>{`localhost:3000/game/${gameID}`}</p>
         <CopyToClipboard text={`localhost:3000/game/${gameID}`}>
           <button>Copy to clipboard</button>
         </CopyToClipboard>
       </div>
-      <button onClick={props.startGame}>
+      <button id="start-game-btn" className="wf-btn" onClick={props.startGame}>
         Start Game
       </button>
     </div>

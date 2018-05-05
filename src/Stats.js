@@ -11,9 +11,9 @@ const Stats = (props) => {
   }
   const winners = players.filter(player => playersObj[player] === max);
   return (
-    <div>
-      <h2>Congrats to the Winner {winners.join('/')}</h2>
-      <table>
+    <div id="stats">
+      <h2>Congrats to the Winner, <span id="winner">{winners.join('/')}</span>!</h2>
+      <table id="stats-table">
         <thead>
           <tr>
             <th>Player</th>
