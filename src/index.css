@@ -3,3 +3,182 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+* {
+  background-color: #d6d7d8;
+  box-sizing: border-box;
+}
+
+h1{
+  margin-top: 10%;
+  font-size: 60px;
+  color: #277cd1;
+}
+
+#home {
+  text-align: center;
+}
+
+.wf-btn {
+  border: none;
+  background-color: #277cd1;
+  color: #212121;
+  border-radius: 1em;
+  border: 2px solid #277cd1;
+}
+
+.wf-btn:hover {
+  background-color: aliceblue;
+  border: 2px solid #212121;
+}
+
+#new-game-btn {
+  width: 200px;
+  height: 40px;
+  font-size: 30px;
+}
+
+#game {
+  text-align: center;
+}
+
+/* waiting room styling */
+#waiting h2{
+  color: #277cd1;
+  font-size: 30px;
+}
+
+#player-info {
+  display: flex;
+  justify-content: space-around;
+}
+
+.input-text {
+  background-color: white;
+}
+
+.input-button {
+  background-color: #277cd1;
+  color: white;
+}
+
+#player-info .input-text{
+  width: 260px;
+  height: 34px;
+  font-size: 26px;
+  text-align: center;
+}
+#player-info .input-button{
+  height: 34px;
+  width: 40px;
+  position: relative;
+  top: -7px;
+  left: 5px;
+}
+
+#player-info h3 {
+  color: #212121;
+  font-size: 23px;
+}
+
+.player-joined {
+  color: #277cd1;
+  font-size: 18px;
+}
+
+#players-waiting {
+  height: 250px;
+}
+
+#invite-link {
+  display: flex;
+  justify-content: center;
+}
+
+#invite-link p {
+  width: 600px;
+  height: 26px;
+  font-size: 19px;
+  background-color: white;
+}
+
+#invite-link button{
+  height: 26px;
+  background-color: #277cd1;
+  color: white;
+  position: relative;
+  top: 18px;
+}
+
+#start-game-btn {
+  margin-top: 40px;
+  height: 50px;
+  width: 150px;
+  font-size: 22px;
+}
+
+/* game play styling */
+#timer {
+  height: 100px;
+  width: 100px;
+  margin: 20px auto;
+  padding-top:20px;;
+  font-size: 50px;
+  border-radius: 50%;
+  background-color: #277cd1;
+  color: white;
+}
+
+#played-words {
+  width: 90%;
+  margin: 10px auto;
+  background-color: #212121;
+  color: white;
+  height: 350px;
+  display: flex;
+  border-radius: 1em;
+  flex-wrap: wrap;
+}
+
+.played-word {
+  width: 20%;
+  font-size: 20px;
+  height: 20px;
+  background-color: #212121;
+  color: white;
+  border-radius: 1em;
+}
+
+#letters-remaining {
+  font-size: 26px;
+  letter-spacing: .7em;
+}
+
+#add-words .input-text {
+  width: 220px;
+  height: 30px;
+  font-size: 20px
+}
+
+/* game stats styling */
+#stats-table {
+  width: 600px;
+  margin: 10px auto;
+  font-size: 18px;
+}
+
+#stats-table td{
+  padding: 5px 0;
+}
+
+#stats-table th {
+  color: #212121;
+}
+
+#winner {
+  color: #277cd1
+}
+
+#stats h2 {
+  font-size: 40px;
+}

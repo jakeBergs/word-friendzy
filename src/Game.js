@@ -100,7 +100,6 @@ class Game extends Component {
         this.setState({ lettersRemaining, currWord: updatedWord });
       }
     } else {
-
       lastLetter = currWord.slice(-1);
       lettersRemaining[lastLetter]++;
       this.setState({ lettersRemaining, currWord: updatedWord });
@@ -131,12 +130,15 @@ class Game extends Component {
     const { lettersRemaining, currWord, words, status, players, thisPlayer } = this.state;
     console.log(thisPlayer)
     return (
-      <div>
+      <div id="game">
         {
           status === 'playing' ?
             <div>
               <WordsPlayed words={words} />
-              <AddWords lettersRemaining={lettersRemaining} currWord={currWord} editWord={this.updateCurr} saveWord={this.saveWord} />
+              {
+                thisPlayer ?
+                <AddWords lettersRemaining={lettersRemaining} currWord={currWord} editWord={this.updateCurr} saveWord={this.saveWord} /> : ''
+              }
               <Timer gameID={gameID} />
             </div> : ''
         }

@@ -4,11 +4,11 @@ const WordsPlayed = (props) => {
   const {words} = props;
   console.log(words)
     return (
-    <div className="played-words">
+    <div id="played-words">
       {
         words === {} ? '' :
         Object.keys(words).map(word => (
-          <div key={word}>{word}</div>
+          <div className="played-word" key={word}>{word}</div>
         ))
       }
     </div>

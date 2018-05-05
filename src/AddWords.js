@@ -7,9 +7,9 @@ const AddWords = (props) => {
     stringView += Array(letters[l] + 1).join(l);
   }
   return (
-    <div>
-      <h3>{stringView}</h3>
-      <input type="text" value={props.currWord} onChange={props.editWord} onKeyPress={props.saveWord} />
+    <div id="add-words">
+      <h3 id="letters-remaining">{stringView}</h3>
+      <input className="input-text" type="text" value={props.currWord} onChange={props.editWord} onKeyPress={props.saveWord} />
     </div>
   )
 }

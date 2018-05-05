@@ -9,9 +9,9 @@ const Home = (props) => {
   }
 
   return (
-    <div>
+    <div id="home">
       <h1>Word Friendzy</h1>
-      <button onClick={gameCreator}>
+      <button className="wf-btn" id="new-game-btn" onClick={gameCreator}>
         New Game
       </button>
     </div>
