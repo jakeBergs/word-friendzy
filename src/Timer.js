@@ -7,7 +7,7 @@ class Timer extends Component {
 
     this.state = {
       timer: null,
-      counter: 99
+      counter: 60
     };
 
     this.tick = this.tick.bind(this);

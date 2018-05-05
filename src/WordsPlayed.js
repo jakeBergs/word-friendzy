@@ -2,7 +2,6 @@ import React from 'react';
 
 const WordsPlayed = (props) => {
   const {words} = props;
-  console.log(words)
     return (
     <div id="played-words">
       {
